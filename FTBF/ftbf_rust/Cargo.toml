@@ -1,0 +1,38 @@
+[package]
+name = "ftbf_rust"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["staticlib"] 
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+strip = true
+#[lang = "eh_personality"] extern fn eh_personality() {}
+#[lang = "panic_fmt"] extern fn panic_fmt() -> ! { loop {} }
+
+
+[dependencies]
+print-no-std = "0.2.1"
+serde = { version = "1.0", default-features = false,  features = ["derive", "alloc"] }
+serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
+linked_list_allocator = "0.10"
+anyhow = { version = "1.0", default-features = false }
+log = "0.4.28"
+widestring = { version = "1.0", default-features = false, features = ["alloc"] }
+regex = { version = "1.11", default-features = false}
+
+[build-dependencies]
+static_vcruntime = "2.0"
+
+[features]
+default = ["mem"]
+mem = []

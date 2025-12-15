@@ -1,0 +1,19 @@
+# Build artifacts
+FTBF/ftbf_rust/target/
+FTBF/obj-intel64/
+FTBF/obj-ia32/
+
+# Logs
+*.log
+pin_trace_*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+

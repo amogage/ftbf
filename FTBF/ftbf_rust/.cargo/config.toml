@@ -1,0 +1,10 @@
+# Statically link the vcruntime.
+# This should go in `.cargo/config.toml`. It will not work in `cargo.toml`.
+[target.'cfg(all(windows, target_env = "msvc"))']
+rustflags = [
+	"-C", "target-feature=+crt-static",
+	"-C", "link-args=/DEFAULTLIB:ucrt.lib /DEFAULTLIB:libvcruntime.lib libcmt.lib",
+	"-C", "link-args=/NODEFAULTLIB:libvcruntimed.lib /NODEFAULTLIB:vcruntime.lib /NODEFAULTLIB:vcruntimed.lib",
+	"-C", "link-args=/NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:msvcrtd.lib",
+	"-C", "link-args=/NODEFAULTLIB:libucrt.lib /NODEFAULTLIB:libucrtd.lib /NODEFAULTLIB:ucrtd.lib"
+]
