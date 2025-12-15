@@ -19,7 +19,7 @@ The framework uses:
 
 This combination enables **sound confirmation** of whether an application exhibits specific capabilities (e.g., code injection, encryption, deobfuscation, privilege escalation), ensured through formal checking.
 
-> **Academic Reference**: This framework is described in the paper *"Malware Analysis through Behavior Formalization"* by Andrei Mogage and Dorel Lucanu (Alexandru Ioan Cuza University). The framework has been used in real cyber forensics investigations, reducing the time and effort of security researchers.
+> **Academic Foundation**: The core concepts of this framework - taint-based logic, formal behavior specification, and capability verification - are described in academic publications listed in the [References](#references) section. The framework has been used in real cyber forensics investigations, reducing the time and effort of security researchers.
 
 ### How It Works
 
@@ -351,6 +351,24 @@ pin.exe -t FTBF.dll -- target_application.exe [args...]
 - Per-thread log files: `pin_trace_PID-{pid}_TID-{tid}.log`
 - Capability detection triggers process termination with exit code 0
 
+## Included Rules
+
+The `rules/` folder contains ready-to-use detection rules for common malware capabilities, as described in the academic publications:
+
+| Folder | Description |
+|--------|-------------|
+| `Bypass UAC` | User Account Control bypass techniques |
+| `Code Injection` | Process injection patterns |
+| `Command and Control (C2) Communication` | Network-based C2 communication |
+| `Debugger Detection API` | Anti-debugging via API calls |
+| `Debugger Detection Code` | Anti-debugging via code patterns |
+| `Deobfuscation` | Runtime code deobfuscation loops |
+| `Disable Winevt` | Windows Event Log tampering |
+| `Privilege escalation` | Elevation of privileges |
+| `RansomwareEncryption` | File encryption patterns |
+
+Each folder contains a `ftbf_policy.json` and `ftbf_rule.json` pair that can be copied to the `pin.exe` directory.
+
 ## Example: Debugger Detection
 
 Included policy detects anti-debugging techniques:
@@ -422,33 +440,46 @@ Detect code patterns (e.g., deobfuscation loops):
 ## Project Structure
 
 ```
-FTBF/
-├── ftbf.cpp              # Main PIN tool entry point
-├── common.h              # Shared declarations, Logger class
-├── types.h               # Common type definitions
-├── cache_utils.*         # LRU cache for instruction strings
-├── config_utils.*        # Configuration file loading
-├── context_utils.*       # CPU context helpers
-├── ffi.*                 # C++/Rust FFI bridge
-├── image_utils.*         # Image/module identification
-├── taint_wrappers.*      # Taint propagation callbacks
-├── makefile              # PIN build system
-├── makefile.rules        # Build rules
-└── ftbf_rust/            # Rust analysis engine
-    ├── Cargo.toml
-    ├── build.rs
-    └── src/
-        ├── lib.rs            # Crate root
-        ├── allocator.rs      # Custom heap allocator
-        ├── analyzer.rs       # Main analysis logic
-        ├── checker.rs        # Rule pattern matching
-        ├── ffi.rs            # FFI exports
-        ├── logger.rs         # Logging bridge
-        ├── policy_structures.rs  # Policy JSON types
-        ├── registers.rs      # Register aliasing maps
-        ├── taint_events.rs   # Event types
-        ├── utils.rs          # Utility functions
-        └── apis.json         # Windows API database
+ftbf/
+├── build_x64.bat         # 64-bit build script
+├── build_x86.bat         # 32-bit build script
+├── rules/                # Pre-built detection rules (see Included Rules)
+│   ├── Bypass UAC/
+│   ├── Code Injection/
+│   ├── Command and Control (C2) Communication/
+│   ├── Debugger Detection API/
+│   ├── Debugger Detection Code/
+│   ├── Deobfuscation/
+│   ├── Disable Winevt/
+│   ├── Privilege escalation/
+│   └── RansomwareEncryption/
+└── FTBF/                 # PIN tool source
+    ├── ftbf.cpp              # Main entry point
+    ├── common.h              # Shared declarations, Logger class
+    ├── types.h               # Common type definitions
+    ├── cache_utils.*         # LRU cache for instruction strings
+    ├── config_utils.*        # Configuration file loading
+    ├── context_utils.*       # CPU context helpers
+    ├── ffi.*                 # C++/Rust FFI bridge
+    ├── image_utils.*         # Image/module identification
+    ├── taint_wrappers.*      # Taint propagation callbacks
+    ├── makefile              # PIN build system
+    ├── makefile.rules        # Build rules
+    └── ftbf_rust/            # Rust analysis engine
+        ├── Cargo.toml
+        ├── build.rs
+        └── src/
+            ├── lib.rs            # Crate root
+            ├── allocator.rs      # Custom heap allocator
+            ├── analyzer.rs       # Main analysis logic
+            ├── checker.rs        # Rule pattern matching
+            ├── ffi.rs            # FFI exports
+            ├── logger.rs         # Logging bridge
+            ├── policy_structures.rs  # Policy JSON types
+            ├── registers.rs      # Register aliasing maps
+            ├── taint_events.rs   # Event types
+            ├── utils.rs          # Utility functions
+            └── apis.json         # Windows API database
 ```
 
 ## Performance Considerations
@@ -481,6 +512,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## References
 
-- **Academic Paper**: Mogage, A., & Lucanu, D. (2025). *Malware Analysis through Behavior Formalization*. Alexandru Ioan Cuza University.
+### Academic Publications
+- Mogage, A., & Lucanu, D. (2024). *A Formal Tainting-Based Framework for Malware Analysis*. IFM 2024. [DOI](https://doi.org/10.1007/978-3-031-76554-4_1)
+- Mogage, A. (2025). *Exposing Malware with Enriched Taint Analysis*. PhD Thesis, Alexandru Ioan Cuza University.
+- Mogage, A. (2024). *A.I. Assisted Malware Capabilities Capturing*. KES 2024. [DOI](https://doi.org/10.1016/j.procs.2024.09.505)
+- Mogage, A., & Lucanu, D. (2025). *Malware Analysis through Behavior Formalization*. (submitted)
+
+### External Resources
 - [Intel PIN Downloads & Documentation](https://www.intel.com/content/www/us/en/developer/articles/tool/pin-a-binary-instrumentation-tool-downloads.html)
 
