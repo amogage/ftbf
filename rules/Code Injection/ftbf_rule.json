@@ -1,0 +1,117 @@
+{
+    "capability": {
+        "Code Injection": []
+    },
+    "metadata": {
+        "constants": {
+            "A": "CreateProcess",
+            "B": "VirtualAllocEx",
+            "C": "WriteProcessMemory",
+            "D": "CreateRemoteThread",
+            "E": "OpenProcess",
+            "F": "ResumeThread"
+        },
+        "explanation": "Detect attempts to inject code into an existing process."
+    },
+    "pattern": {
+        "andThen": [
+            {
+                "and": [
+                    {
+                        "or": [
+                            {
+                                "TaintedAPI": [
+                                    "A"
+                                ]
+                            },
+                            {
+                                "TaintedAPI": [
+                                    "E"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "Next": {
+                            "Tainted": [
+                                "X_0"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "and": [
+                    {
+                        "PropToAPI": [
+                            "B",
+                            "X_0"
+                        ]
+                    },
+                    {
+                        "Next": {
+                            "TaintedAPI": [
+                                "B"
+                            ]
+                        }
+                    },
+                    {
+                        "Next": {
+                            "Next": {
+                                "Tainted": [
+                                    "X_1"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "and": [
+                    {
+                        "PropToAPI": [
+                            "C",
+                            "X_0"
+                        ]
+                    },
+                    {
+                        "Next": {
+                            "PropToAPI": [
+                                "C",
+                                "X_1"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "or": [
+                    {
+                        "and": [
+                            {
+                                "PropToAPI": [
+                                    "D",
+                                    "X_0"
+                                ]
+                            },
+                            {
+                                "Next": {
+                                    "PropToAPI": [
+                                        "D",
+                                        "X_1"
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "PropToAPI": [
+                            "F",
+                            "X_0"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

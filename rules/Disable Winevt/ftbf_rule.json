@@ -1,0 +1,170 @@
+{
+    "capability": {
+        "Disable Windows Event Logging": []
+    },
+    "metadata": {
+        "constants": {
+            "A": "OpenSCManager",
+            "B": "OpenService",
+            "C": "QueryServiceStatusEx",
+            "D": "CreateToolhelp32Snapshot",
+            "E": "Thread32Next",
+            "F": "OpenThread",
+            "G": "TerminateThread"
+        },
+        "explanation": "Detect attempts to disable windows event logging."
+    },
+    "pattern": {
+        "andThen": [
+            {
+                "and": [
+                    {
+                        "TaintedAPI": [
+                            "A"
+                        ]
+                    },
+                    {
+                        "Next": {
+                            "Tainted": [
+                                "X_0"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "and": [
+                    {
+                        "PropToAPICond": [
+                            "B",
+                            "X_0",
+                            [
+                                {
+                                    "index": 1,
+                                    "type": "str",
+                                    "value": "EventLog"
+                                }
+                            ]
+                        ]
+                    },
+                    {
+                        "Next": {
+                            "TaintedAPI": [
+                                "B"
+                            ]
+                        }
+                    },
+                    {
+                        "Next": {
+                            "Next": {
+                                "Tainted": [
+                                    "X_1"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "and": [
+                    {
+                        "PropToAPI": [
+                            "C",
+                            "X_1"
+                        ]
+                    },
+                    {
+                        "Next": {
+                            "TaintedAPI": [
+                                "C"
+                            ]
+                        }
+                    },
+                    {
+                        "Next": {
+                            "Next": {
+                                "Tainted": [
+                                    "X_2"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "and": [
+                    {
+                        "TaintedAPI": [
+                            "D"
+                        ]
+                    },
+                    {
+                        "Next": {
+                            "Tainted": [
+                                "X_3"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "and": [
+                    {
+                        "PropToAPI": [
+                            "E",
+                            "X_3"
+                        ]
+                    },
+                    {
+                        "Next": {
+                            "TaintedAPI": [
+                                "E"
+                            ]
+                        }
+                    },
+                    {
+                        "Next": {
+                            "Next": {
+                                "Tainted": [
+                                    "X_4"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "and": [
+                    {
+                        "PropToAPI": [
+                            "F",
+                            "X_4"
+                        ]
+                    },
+                    {
+                        "Next": {
+                            "TaintedAPI": [
+                                "F"
+                            ]
+                        }
+                    },
+                    {
+                        "Next": {
+                            "Next": {
+                                "Tainted": [
+                                    "X_5"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "PropToAPI": [
+                    "G",
+                    "X_5"
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,82 @@
+{
+    "capability": {
+        "Privilege Escalation": []
+    },
+    "metadata": {
+        "constants": {
+            "A": "GetCurrentProcess",
+            "B": "OpenProcessToken",
+            "C": "LookupPrivilegeValue",
+            "D": "AdjustTokenPrivileges"
+        },
+        "explanation": "The rule detects attempts by malware to elevate its privileges on a system, as privilege escalation is a common tactic used by sophisticated malware."
+    },
+    "pattern": {
+        "andThen": [
+            {
+                "and": [
+                    {
+                        "TaintedAPI": [
+                            "A"
+                        ]
+                    },
+                    {
+                        "Next": {
+                            "Tainted": [
+                                "X_0"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "and": [
+                    {
+                        "PropToAPI": [
+                            "B",
+                            "X_0"
+                        ]
+                    },
+                    {
+                        "Next": {
+                            "TaintedAPI": [
+                                "B"
+                            ]
+                        }
+                    },
+                    {
+                        "Next": {
+                            "Next": {
+                                "Tainted": [
+                                    "X_1"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "and": [
+                    {
+                        "TaintedAPI": [
+                            "C"
+                        ]
+                    },
+                    {
+                        "Next": {
+                            "Tainted": [
+                                "X_2"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "PropToAPI": [
+                    "D",
+                    "X_1"
+                ]
+            }
+        ]
+    }
+}

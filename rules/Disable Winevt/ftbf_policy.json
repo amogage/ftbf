@@ -1,0 +1,67 @@
+{
+	"taint_sources": {
+		"api_params": {
+			"OpenSCManager": [
+				{
+					"type": "reg",
+					"reg": "gax"
+				}
+			],
+			"OpenService": [
+				{
+					"type": "reg",
+					"reg": "gax"
+				}
+			],
+			"QueryServiceStatusEx": [
+				{
+					"type": "ptr",
+					"index": 2,
+					"ptr_length": {
+						"len_param_index": 3,
+						"len_param_type": "int"
+					}
+				}
+			],
+			"CreateToolhelp32Snapshot": [
+				{
+					"type": "reg",
+					"reg": "gax"
+				}
+			],
+			"Thread32Next": [
+				{
+					"type": "ptr",
+					"index": 1,
+					"ptr_length": {
+						"abs_val": 28
+					}
+				}
+			],
+			"OpenThread": [
+				{
+					"type": "reg",
+					"reg": "gax"
+				}
+			]
+		}
+	},
+	"extra_info": {
+		"sources": {
+			"OpenService": [
+				{
+					"type": "str",
+					"index": 1
+				}
+			]
+		},
+		"trigger_save": {
+			"PropToAPI": [
+				"OpenService"
+			]
+		},
+		"trigger_check": [
+			"TerminateThread"
+		]
+	}
+}

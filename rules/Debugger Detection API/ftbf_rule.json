@@ -1,0 +1,88 @@
+{
+    "capability": {
+        "Debugger Evasion": []
+    },
+    "metadata": {
+        "explanation": "Detect attempts to detect and avoid debuggers.",
+        "constants": {
+            "A": "IsDebuggerPresent",
+            "B": "GetCurrentProcess",
+            "C": "CheckRemoteDebuggerPresent",
+            "D": "ZwQueryInformationProcess",
+            "ProcessDebugPort": "7",
+            "ProcessDebugFlags": "31",
+            "ProcessDebugObjectHandle": "30"
+        }
+    },
+    "pattern": {
+        "or": [
+            {
+                "TaintedAPI": [
+                    "A"
+                ]
+            },
+            {
+                "andThen": [
+                    {
+                        "and": [
+                            {
+                                "TaintedAPI": [
+                                    "B"
+                                ]
+                            },
+                            {
+                                "Next": {
+                                    "Tainted": [
+                                        "X_0"
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "PropToAPI": [
+                            "C",
+                            "X_0"
+                        ]
+                    }
+                ]
+            },
+            {
+                "TaintedAPICond": [
+                    "D",
+                    [
+                        {
+                            "type": "int",
+                            "index": 1,
+                            "value": "ProcessDebugPort"
+                        }
+                    ]
+                ]
+            },
+            {
+                "TaintedAPICond": [
+                    "D",
+                    [
+                        {
+                            "type": "int",
+                            "index": 1,
+                            "value": "ProcessDebugFlags"
+                        }
+                    ]
+                ]
+            },
+            {
+                "TaintedAPICond": [
+                    "D",
+                    [
+                        {
+                            "type": "int",
+                            "index": 1,
+                            "value": "ProcessDebugObjectHandle"
+                        }
+                    ]
+                ]
+            }
+        ]
+    }
+}

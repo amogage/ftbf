@@ -1,0 +1,40 @@
+{
+    "capability": {
+        "Debugger detection - PEB": []
+    },
+    "metadata": {
+        "constants": {
+            "O": "2"
+        },
+        "explanation": "Detect attempts to verify the presence of a debugger through the PEB structure."
+    },
+    "pattern": {
+        "andThen": [
+            {
+                "and": [
+                    {
+                        "Tainted": [
+                            "X"
+                        ]
+                    },
+                    {
+                        "Next": {
+                            "PropToMem": [
+                                "M",
+                                "SZ",
+                                "X"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "TaintedMemAccess": [
+                    "M",
+                    "O",
+                    "X"
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,92 @@
+{
+    "capability": {
+        "C2 Communication": []
+    },
+    "metadata": {
+        "constants": {
+            "A": "InternetOpen",
+            "B": "InternetConnect",
+            "C": "HttpOpenRequest",
+            "D": "HttpSendRequest"
+        },
+        "explanation": "The rule detect attempts of communicating with external command and control servers."
+    },
+    "pattern": {
+        "andThen": [
+            {
+                "and": [
+                    {
+                        "TaintedAPI": [
+                            "A"
+                        ]
+                    },
+                    {
+                        "Next": {
+                            "Tainted": [
+                                "X_0"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "and": [
+                    {
+                        "PropToAPI": [
+                            "B",
+                            "X_0"
+                        ]
+                    },
+                    {
+                        "Next": {
+                            "TaintedAPI": [
+                                "B"
+                            ]
+                        }
+                    },
+                    {
+                        "Next": {
+                            "Next": {
+                                "Tainted": [
+                                    "X_1"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "and": [
+                    {
+                        "PropToAPI": [
+                            "C",
+                            "X_1"
+                        ]
+                    },
+                    {
+                        "Next": {
+                            "TaintedAPI": [
+                                "C"
+                            ]
+                        }
+                    },
+                    {
+                        "Next": {
+                            "Next": {
+                                "Tainted": [
+                                    "X_2"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "PropToAPI": [
+                    "D",
+                    "X_2"
+                ]
+            }
+        ]
+    }
+}

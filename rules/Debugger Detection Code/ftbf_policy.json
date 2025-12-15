@@ -1,0 +1,34 @@
+{
+    "taint_sources": {
+        "regex_code": {
+            "code": [
+                "mov (.+), (?:dword ptr fs:\\[0x30\\]|qword ptr gs:\\[0x60\\])"
+            ],
+            "actions": {
+                "predicates": [
+                    {
+                        "Tainted": [
+                            "X"
+                        ]
+                    },
+                    {
+                        "PropToMem": [
+                            "\\1",
+                            "0x1D8",
+                            "X"
+                        ]
+                    }
+                ],
+                "message": "PEB Access!",
+                "options": {
+                    "constraint": "consecutive"
+                }
+            }
+        }
+    },
+    "extra_info": {
+        "trigger_check": [
+            "TaintedMemAccess"
+        ]
+    }
+}

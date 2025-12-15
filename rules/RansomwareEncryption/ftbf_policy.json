@@ -1,0 +1,57 @@
+{
+	"taint_sources": {
+		"api_params": {
+			"CreateFile": [
+				{
+					"type": "reg",
+					"reg": "gax"
+				}
+			],
+			"ReadFile": [
+				{
+					"type": "ptr",
+					"index": 1,
+					"ptr_length": {
+						"len_param_index": 2,
+						"len_param_type": "int"
+					}
+				}
+			]
+		}
+	},
+	"extra_info": {
+		"sources": {
+			"CreateFile": [
+				{
+					"type": "str",
+					"index": 0
+				},
+				{
+					"type": "int",
+					"index": 4
+				}
+			],
+			"ReadFile": [
+				{
+					"type": "ptr",
+					"index": 1,
+					"ptr_length": {
+						"len_param_index": 2,
+						"len_param_type": "int"
+					}
+				}
+			]
+		},
+		"trigger_save": {
+			"PropToAPI": [
+				"ReadFile"
+			],
+			"TaintedAPI": [
+				"CreateFile"
+			]
+		},
+		"trigger_check": [
+			"WriteFile"
+		]
+	}
+}

@@ -1,0 +1,75 @@
+{
+    "capability": {
+        "RansomwareBehaviourNaive": [
+            "V",
+            "V2"
+        ]
+    },
+    "metadata": {
+        "explanation": "The rule tests whether an application has a ransomware behaviour.",
+        "constants": {
+            "A": "CreateFile",
+            "B": "ReadFile",
+            "C": "CryptEncrypt",
+            "D": "WriteFile"
+        }
+    },
+    "pattern": {
+        "andThen": [
+            {
+                "and": [
+                    {
+                        "TaintedAPI": [
+                            "A"
+                        ]
+                    },
+                    {
+                        "Next": {
+                            "Tainted": [
+                                "X_0"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "and": [
+                    {
+                        "PropToAPI": [
+                            "B",
+                            "X_0"
+                        ]
+                    },
+                    {
+                        "Next": {
+                            "TaintedAPI": [
+                                "B"
+                            ]
+                        }
+                    },
+                    {
+                        "Next": {
+                            "Next": {
+                                "Tainted": [
+                                    "X_1"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "PropToAPI": [
+                    "C",
+                    "X_1"
+                ]
+            },
+            {
+                "PropToAPI": [
+                    "D",
+                    "X_0"
+                ]
+            }
+        ]
+    }
+}

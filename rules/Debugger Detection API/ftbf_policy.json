@@ -1,0 +1,35 @@
+{
+    "taint_sources": {
+        "api_params": {
+            "IsDebuggerPresent": [],
+            "GetCurrentProcess": [
+                {
+                    "type": "reg",
+                    "reg": "gax"
+                }
+            ],
+            "CheckRemoteDebuggerPresent": [],
+            "ZwQueryInformationProcess": []
+        }
+    },
+    "extra_info": {
+        "sources": {
+            "ZwQueryInformationProcess": [
+                {
+                    "type": "int",
+                    "index": 1
+                }
+            ]
+        },
+        "trigger_save": {
+            "TaintedAPI": [
+                "ZwQueryInformationProcess"
+            ]
+        },
+        "trigger_check": [
+            "IsDebuggerPresent",
+            "CheckRemoteDebuggerPresent",
+            "ZwQueryInformationProcess"
+        ]
+    }
+}

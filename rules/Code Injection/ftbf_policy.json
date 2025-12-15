@@ -1,0 +1,33 @@
+{
+    "taint_sources": {
+        "api_params": {
+            "CreateProcess": [
+                {
+                    "type": "ptr",
+                    "index": 9,
+                    "ptr_length": {
+                        "abs_val": 8
+                    }
+                }
+            ],
+            "OpenProcess": [
+                {
+                    "type": "reg",
+                    "reg": "gax"
+                }
+            ],
+            "VirtualAllocEx": [
+                {
+                    "type": "reg",
+                    "reg": "gax"
+                }
+            ]
+        }
+    },
+    "extra_info": {
+        "trigger_check": [
+            "CreateRemoteThread",
+            "ResumeThread"
+        ]
+    }
+}

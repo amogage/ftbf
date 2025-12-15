@@ -1,0 +1,36 @@
+{
+    "capability": {
+        "Payload deobfuscation": []
+    },
+    "metadata": {
+        "explanation": "Detect the process of deobfuscating a payload and then executing it."
+    },
+    "pattern": {
+        "andThen": [
+            {
+                "and": [
+                    {
+                        "Tainted": [
+                            "X"
+                        ]
+                    },
+                    {
+                        "Next": {
+                            "PropToMem": [
+                                "M",
+                                "SZ",
+                                "X"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "TaintedCodeExecute": [
+                    "M",
+                    "X"
+                ]
+            }
+        ]
+    }
+}

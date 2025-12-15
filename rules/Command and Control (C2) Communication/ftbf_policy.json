@@ -1,0 +1,59 @@
+{
+	"taint_sources": {
+		"api_params": {
+			"InternetOpen": [
+				{
+					"type": "reg",
+					"reg": "gax"
+				}
+			],
+			"InternetConnect": [
+				{
+					"type": "reg",
+					"reg": "gax"
+				}
+			],
+			"HttpOpenRequest": [
+				{
+					"type": "reg",
+					"reg": "gax"
+				}
+			],
+			"HttpSendRequest": [
+				{
+					"type": "reg",
+					"reg": "gax"
+				}
+			]
+		}
+	},
+	"extra_info": {
+		"sources": {
+			"HttpSendRequest": [
+				{
+					"type": "ptr",
+					"index": 1,
+					"ptr_length": {
+						"len_param_index": 2,
+						"len_param_type": "int"
+					}
+				}
+			],
+			"InternetConnect": [
+				{
+					"type": "str",
+					"index": 1
+				}
+			]
+		},
+		"trigger_save": {
+			"PropToAPI": [
+				"InternetConnect",
+				"HttpSendRequest"
+			]
+		},
+		"trigger_check": [
+			"HttpSendRequest"
+		]
+	}
+}

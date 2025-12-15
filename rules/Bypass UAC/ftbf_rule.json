@@ -1,0 +1,58 @@
+{
+    "capability": {
+        "DisableUAC": []
+    },
+    "metadata": {
+        "constants": {
+            "A": "RegOpenKeyEx",
+            "B": "RegSetValueEx",
+            "HKEY_LOCAL_MACHINE": "-2147483646"
+        },
+        "explanation": "The rule tests whether the application disables the UAC system."
+    },
+    "pattern": {
+        "andThen": [
+            {
+                "and": [
+                    {
+                        "TaintedAPICond": [
+                            "A",
+                            [
+                                {
+                                    "type": "int",
+                                    "index": 0,
+                                    "value": "HKEY_LOCAL_MACHINE"
+                                }
+                            ]
+                        ]
+                    },
+                    {
+                        "Next": {
+                            "Tainted": [
+                                "X"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "PropToAPICond": [
+                    "B",
+                    "X",
+                    [
+                        {
+                            "type": "str",
+                            "index": 1,
+                            "value": "EnableLUA"
+                        },
+                        {
+                            "type": "ptr",
+                            "index": 4,
+                            "value": "00000000"
+                        }
+                    ]
+                ]
+            }
+        ]
+    }
+}

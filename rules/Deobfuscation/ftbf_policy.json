@@ -1,0 +1,36 @@
+{
+
+    "taint_sources": {
+        "regex_code": {
+            "code": [
+                "xor (.+), .+",
+                "mov byte ptr \\[(.+)\\+.+\\], \\1"
+            ],
+            "actions": {
+                "predicates": [
+                    {
+                        "Tainted": [
+                            "X"
+                        ]
+                    },
+                    {
+                        "PropToMem": [
+                            "\\2",
+                            "1",
+                            "X"
+                        ]
+                    }
+                ],
+                "message": "Deobfuscation attempt detected!",
+                "options": {
+                    "constraint": "consecutive"
+                }
+            }
+        }
+    },
+    "extra_info": {
+        "trigger_check": [
+            "TaintedCodeExecute"
+        ]
+    }
+}

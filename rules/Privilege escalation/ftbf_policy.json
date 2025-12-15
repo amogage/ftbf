@@ -1,0 +1,27 @@
+{
+    "taint_sources": {
+        "api_params": {
+            "GetCurrentProcess": [
+                {
+                    "type": "reg",
+                    "reg": "gax"
+                }
+            ],
+            "LookupPrivilegeValue": [],
+            "OpenProcessToken": [
+                {
+                    "type": "ptr",
+                    "index": 2,
+                    "ptr_length": {
+                        "abs_val": 4
+                    }
+                }
+            ]
+        }
+    },
+    "extra_info": {
+        "trigger_check": [
+            "AdjustTokenPrivileges"
+        ]
+    }
+}
