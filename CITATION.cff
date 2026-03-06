@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Mogage"
+  given-names: "Andrei"
+  orcid: "https://orcid.org/0000-0002-3533-7573"
+- family-names: "Lucanu"
+  given-names: "Dorel"
+  orcid: "https://orcid.org/0000-0001-8097-040X"
+title: "Formal Tainting-Based Framework"
+version: 1.0
+doi: 10.5281/zenodo.18847177
+date-released: 2025-12-15
+url: "https://github.com/amogage/ftbf"
