@@ -517,7 +517,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Mogage, A. (2025). *Exposing Malware with Enriched Taint Analysis*. PhD Thesis, Alexandru Ioan Cuza University.
 - Mogage, A. (2024). *A.I. Assisted Malware Capabilities Capturing*. KES 2024. [DOI](https://doi.org/10.1016/j.procs.2024.09.505)
 - Mogage, A., & Lucanu, D. (2025). *Malware Analysis through Behavior Formalization*. (submitted)
-- Zenodo [![DOI](https://zenodo.org/badge/1115000763.svg)](https://doi.org/10.5281/zenodo.18847176)
+- Zenodo [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18888853.svg)](https://doi.org/10.5281/zenodo.18888853)
 
 ### External Resources
 - [Intel PIN Downloads & Documentation](https://www.intel.com/content/www/us/en/developer/articles/tool/pin-a-binary-instrumentation-tool-downloads.html)
